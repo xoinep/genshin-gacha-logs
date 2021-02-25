@@ -51,7 +51,7 @@ const getGachaLogs = async (key, name) => {
   let res = [];
   let promises = [];
   let shouldContinue = true;
-  for (var i = 1; i < 11; i++) {
+  for (var i = 1; i < 20; i++) {
     promises.push(getGachaLog(key, name, i));
   }
   res = await Promise.all(promises);
