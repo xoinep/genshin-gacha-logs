@@ -73,7 +73,7 @@ const getGachaLog = (key, name, page, retryCount = 3) => {
       if (retryCount) {
         await sleep(5);
         retryCount--;
-        return getGachaLog(key, page, name, retryCount);
+        return getGachaLog(key, name, page, retryCount);
       } else {
         reject(e);
       }
