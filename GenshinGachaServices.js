@@ -55,6 +55,7 @@ const getGachaLogs = async (key, name) => {
     promises.push(getGachaLog(key, name, i));
   }
   res = await Promise.all(promises);
+  console.log(res);
   return res;
 };
 
@@ -69,8 +70,6 @@ const getGachaLog = (key, name, page, retryCount = 3) => {
       const res = fetch(url, { timeout: 15 * 1000 })
         .then((res) => res.json())
         .then((json) => {
-          console.log(json.data);
-          console.log(json.data.list);
           resolve(json.data.list);
         })
         .catch((e) => console.log(e));
