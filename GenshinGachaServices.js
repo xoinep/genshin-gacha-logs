@@ -70,12 +70,13 @@ const getGachaLog = (key, name, page, retryCount = 3) => {
       console.log(`Go! ${page}`);
       resolve(res.data.list);
     } catch (error) {
+      console.log(error);
       if (retryCount) {
         await sleep(5);
         retryCount--;
         return getGachaLog(key, name, page, retryCount);
       } else {
-        reject(e);
+        reject(error);
       }
     }
   });
