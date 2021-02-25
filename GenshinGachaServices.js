@@ -55,7 +55,9 @@ const getGachaLogs = async (key, name) => {
     promises.push(getGachaLog(key, name, i));
   }
   res = await Promise.all(promises);
-  return res;
+  let tmp = [];
+  res.map((d) => (tmp = [...tmp, ...d]));
+  return tmp;
 };
 
 const getGachaLog = (key, name, page, retryCount = 3) => {
