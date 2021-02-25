@@ -55,7 +55,6 @@ const getGachaLogs = async (key, name) => {
     promises.push(getGachaLog(key, name, i));
   }
   res = await Promise.all(promises);
-  console.log(res);
   return res;
 };
 
