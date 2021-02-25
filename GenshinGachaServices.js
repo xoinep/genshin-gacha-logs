@@ -65,8 +65,7 @@ const getGachaLogs = async (key, name) => {
 
 const getGachaLog = async (key, name, page, retryCount = 3) => {
   try {
-    let url =
-      GachaLogBaseUrl + `&gacha_type=${key}` + `&page=${page}` + `&size=${20}`;
+    let url = GachaLogBaseUrl + `&gacha_type=${key}` + `&page=${page}`;
     const res = await request(url);
     return res.data.list;
   } catch (error) {
