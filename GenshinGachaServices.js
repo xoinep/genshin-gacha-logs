@@ -69,9 +69,11 @@ const getGachaLog = (key, name, page, retryCount = 3) => {
       const res = fetch(url, { timeout: 15 * 1000 })
         .then((res) => res.json())
         .then((json) => {
-          console.log(`Go! ${page}`);
+          console.log(json.data);
+          console.log(json.data.list);
           resolve(json.data.list);
-        });
+        })
+        .catch((e) => console.log(e));
     } catch (error) {
       console.log(error);
       if (retryCount) {
