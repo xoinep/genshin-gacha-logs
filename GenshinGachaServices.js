@@ -48,36 +48,39 @@ const request = async (url) => {
 };
 
 const getGachaLogs = async (key, name) => {
-  let page = 1;
   let res = [];
+  let promises = [];
   let shouldContinue = true;
-  while (shouldContinue) {
-    let tempRes = await getGachaLog(key, name, page);
-    if (tempRes.length > 0) {
-      res = [...res, ...tempRes];
-      page++;
-    } else {
-      shouldContinue = false;
-    }
+  for (var i = 1; i < 11; i++) {
+    promises.push(getGachaLog(key, name, i));
   }
+  res = await Promise.all(promises);
   return res;
 };
 
-const getGachaLog = async (key, name, page, retryCount = 3) => {
-  try {
-    let url =
-      GachaLogBaseUrl + `&gacha_type=${key}` + `&page=${page}` + `&size=${20}`;
-    const res = await request(url);
-    return res.data.list;
-  } catch (error) {
-    if (retryCount) {
-      await sleep(5);
-      retryCount--;
-      return await getGachaLog(key, page, name, retryCount);
-    } else {
-      throw e;
+const getGachaLog = (key, name, page, retryCount = 3) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let url =
+        GachaLogBaseUrl +
+        `&gacha_type=${key}` +
+        `&page=${page}` +
+        `&size=${20}`;
+      const res = fetch(url, { timeout: 15 * 1000 }).then(
+        (res) => res.json().data.list
+      );
+      console.log(`Go! ${page}`);
+      resolve(res);
+    } catch (error) {
+      if (retryCount) {
+        await sleep(5);
+        retryCount--;
+        return getGachaLog(key, page, name, retryCount);
+      } else {
+        reject(e);
+      }
     }
-  }
+  });
 };
 
 const sleep = (sec = 1) => {
