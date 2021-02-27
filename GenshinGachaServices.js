@@ -37,8 +37,15 @@ const getGachaLog = (key, url, page, retryCount = 3) => {
       let final_url =
         url + `&gacha_type=${key}` + `&page=${page}` + `&size=${20}`;
       const res = fetch(final_url, { timeout: 15 * 1000 })
-        .then((res) => res.json())
+        .then((res) => {
+          console.log("11111");
+          console.log(res.json());
+          res.json();
+        })
         .then((json) => {
+          console.log("22222");
+
+          console.log(json);
           resolve(json.data.list);
         })
         .catch((e) => console.log(e));
