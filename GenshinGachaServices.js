@@ -9,7 +9,9 @@ const GenshinGachaServices = {};
 const order = ["301", "302", "200", "100"];
 
 GenshinGachaServices.getData = async (key, url) => {
-  let gachaLogBaseUrl = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?${url}`;
+  const { searchParams } = new URL(url);
+  const queryString = searchParams.toString();
+  let gachaLogBaseUrl = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?${queryString}`;
   return await getGachaLogs(key, gachaLogBaseUrl);
 };
 
