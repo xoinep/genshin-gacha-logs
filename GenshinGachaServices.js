@@ -18,7 +18,7 @@ GenshinGachaServices.getData = async (logText) => {
     const { searchParams } = new URL(url);
     const queryString = searchParams.toString();
     GachaTypesUrl = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getConfigList?${queryString}`;
-    GachaLogBaseUrl = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?${queryString}`;
+    // GachaLogBaseUrl = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getGachaLog?${queryString}`;
     const res = await request(GachaTypesUrl);
     const gachaTypes = res.data.gacha_type_list;
     const orderedGachaTypes = [];
@@ -91,6 +91,24 @@ const sleep = (sec = 1) => {
   return new Promise((rev) => {
     setTimeout(rev, sec * 1000);
   });
+};
+
+GenshinGachaServices.loadUserData = async (userKey) => {
+  const { searchParams } = new URL(userKey);
+  const queryString = searchParams.toString();
+  GachaTypesUrl = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getConfigList?${queryString}`;
+  const res = await request(GachaTypesUrl);
+  const gachaTypes = res.data.gacha_type_list;
+  const orderedGachaTypes = [];
+  order.forEach((key) => {
+    const index = gachaTypes.findIndex((item) => item.key === key);
+    if (index !== -1) {
+      orderedGachaTypes.push(gachaTypes.splice(index, 1)[0]);
+    }
+  });
+  orderedGachaTypes.push(...gachaTypes);
+  console.log(orderedGachaTypes);
+  return orderedGachaTypes;
 };
 
 module.exports = GenshinGachaServices;
