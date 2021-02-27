@@ -98,6 +98,7 @@ GenshinGachaServices.loadUserData = async (userKey) => {
   const queryString = searchParams.toString();
   GachaTypesUrl = `https://hk4e-api.mihoyo.com/event/gacha_info/api/getConfigList?${queryString}`;
   const res = await request(GachaTypesUrl);
+  console.log(res);
   const gachaTypes = res.data.gacha_type_list;
   const orderedGachaTypes = [];
   order.forEach((key) => {
