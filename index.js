@@ -10,7 +10,7 @@ app.use(cors());
 app.get("/", (req, res) => res.sendStatus(200));
 
 app.post("/get-gacha-logs", async (req, res) => {
-  const { content } = req.body;
+  const { key } = req.body;
   console.log(content);
   let result = await GenshinGachaServices.getData(content);
   res.send(result);
