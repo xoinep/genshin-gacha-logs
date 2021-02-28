@@ -21,15 +21,22 @@ const request = async (url) => {
 };
 
 const getGachaLogs = async (key, url) => {
-  let res = [];
   let promises = [];
-  let shouldContinue = true;
-  for (var i = 1; i < 20; i++) {
-    promises.push(getGachaLog(key, url, i));
-  }
-  res = await Promise.all(promises);
   let tmp = [];
-  res.map((d) => (tmp = [...tmp, ...d]));
+  let shouldContinue = true;
+  while (shouldContinue) {
+    for (var i = 1; i < 10; i++) {
+      promises.push(getGachaLog(key, url, i));
+    }
+    let res = await Promise.all(promises);
+    for (const item of res) {
+      if (item.length > 0) {
+        tmp = [...tmp, ...item];
+      } else {
+        shouldContinue = false;
+      }
+    }
+  }
   return tmp;
 };
 
